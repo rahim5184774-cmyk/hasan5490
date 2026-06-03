@@ -1,0 +1,2007 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taher Tube - Professional YouTube Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #FF0000;
+            --dark: #0f0f0f;
+            --darker: #030303;
+            --light: #212121;
+            --lighter: #272727;
+            --text: #ffffff;
+            --text-secondary: #aaaaaa;
+            --text-tertiary: #606060;
+            --border: #303030;
+        }
+
+        html, body {
+            font-family: 'Roboto', sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            width: 100%;
+            height: 100%;
+        }
+
+        .app {
+            display: flex;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        /* HEADER */
+        .header {
+            height: 64px;
+            background: var(--light);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            gap: 16px;
+            z-index: 1000;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            min-width: 200px;
+        }
+
+        .menu-btn {
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
+
+        .menu-btn:hover {
+            background: var(--lighter);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--text);
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .logo:hover {
+            opacity: 0.8;
+        }
+
+        .logo-icon {
+            font-size: 28px;
+            color: var(--primary);
+        }
+
+        .logo-text {
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        /* SEARCH BOX */
+        .search-container {
+            flex: 1;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .search-box {
+            display: flex;
+            width: 100%;
+            border: 1.5px solid var(--border);
+            border-radius: 28px;
+            background: var(--darker);
+            padding: 10px 16px;
+            gap: 12px;
+            transition: all 0.2s;
+            align-items: center;
+        }
+
+        .search-box:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 12px rgba(255,0,0,0.2);
+        }
+
+        .search-input {
+            background: transparent;
+            border: none;
+            color: var(--text);
+            width: 100%;
+            font-size: 14px;
+            outline: none;
+            flex: 1;
+        }
+
+        .search-input::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        .search-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 18px;
+            cursor: pointer;
+            padding: 4px;
+            transition: color 0.2s;
+        }
+
+        .search-btn:hover {
+            color: var(--primary);
+        }
+
+        /* SEARCH SUGGESTIONS */
+        .search-suggestions {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--light);
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 2000;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+        }
+
+        .search-suggestions.active {
+            display: block;
+        }
+
+        .suggestion-item {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-secondary);
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        .suggestion-item:hover {
+            background: var(--lighter);
+            color: var(--text);
+        }
+
+        .suggestion-item i {
+            font-size: 14px;
+            min-width: 16px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 120px;
+        }
+
+        .header-icon-btn {
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
+
+        .header-icon-btn:hover {
+            background: var(--lighter);
+            color: var(--primary);
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.05);
+        }
+
+        /* MAIN */
+        .main {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 240px;
+            background: var(--dark);
+            border-right: 1px solid var(--border);
+            overflow-y: auto;
+            padding-top: 12px;
+            transition: width 0.3s;
+            z-index: 100;
+        }
+
+        .sidebar.collapsed {
+            width: 72px;
+        }
+
+        .sidebar.collapsed .nav-text {
+            display: none;
+        }
+
+        .nav-section {
+            margin-bottom: 12px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 10px 12px 10px 16px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: var(--lighter);
+            color: var(--text);
+        }
+
+        .nav-item.active {
+            background: var(--lighter);
+            color: var(--text);
+            border-left-color: var(--primary);
+        }
+
+        .nav-icon {
+            font-size: 18px;
+            min-width: 24px;
+        }
+
+        .nav-text {
+            white-space: nowrap;
+        }
+
+        .sidebar-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 12px 0;
+        }
+
+        .sidebar-section-title {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            padding: 12px 16px 8px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .history-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            padding: 8px 12px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+
+        .history-item:hover {
+            background: var(--lighter);
+            color: var(--text);
+            padding-left: 16px;
+        }
+
+        /* CONTENT */
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .filter-bar {
+            height: 60px;
+            background: var(--dark);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 24px;
+            overflow-x: auto;
+            flex-shrink: 0;
+        }
+
+        .filter-btn {
+            background: var(--lighter);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+            transition: all 0.2s;
+            min-width: max-content;
+        }
+
+        .filter-btn:hover {
+            background: var(--border);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .videos-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            padding: 24px;
+            auto-rows: max-content;
+        }
+
+        /* VIDEO CARD */
+        .video-card {
+            background: var(--dark);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .video-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(255,0,0,0.15);
+            border-color: var(--border);
+        }
+
+        .video-thumbnail {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            overflow: hidden;
+        }
+
+        .video-thumbnail img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background: var(--lighter);
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            z-index: 5;
+        }
+
+        .video-card:hover .video-overlay {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .play-icon {
+            width: 52px;
+            height: 52px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .video-card:hover .play-icon {
+            opacity: 1;
+        }
+
+        .duration-badge {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            z-index: 4;
+        }
+
+        .video-info {
+            padding: 12px;
+        }
+
+        .video-title {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.4;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .video-channel {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .channel-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .channel-info {
+            flex: 1;
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .channel-name {
+            color: var(--text);
+            font-weight: 500;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .video-stats {
+            font-size: 11px;
+            display: flex;
+            gap: 4px;
+        }
+
+        .video-actions {
+            display: flex;
+            gap: 8px;
+            padding-top: 8px;
+            border-top: 1px solid var(--border);
+        }
+
+        .action-btn {
+            flex: 1;
+            background: var(--lighter);
+            border: none;
+            color: var(--text-secondary);
+            padding: 6px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .action-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* MODALS */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.98);
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: var(--light);
+            border-radius: 16px;
+            width: 90%;
+            max-width: 950px;
+            max-height: 90vh;
+            overflow: auto;
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.6);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .modal-close:hover {
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        .player-container {
+            width: 100%;
+            height: 600px;
+            background: #000;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .player-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .modal-info {
+            padding: 28px;
+        }
+
+        .modal-title {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .modal-meta {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            flex-wrap: wrap;
+        }
+
+        .modal-actions-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .modal-action-btn {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1.5px solid var(--primary);
+            color: var(--primary);
+            padding: 10px 20px;
+            border-radius: 24px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .modal-action-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .modal-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* DOWNLOAD OPTIONS MODAL */
+        .download-options {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 24px;
+            max-width: 500px;
+            animation: slideUp 0.3s ease;
+        }
+
+        .download-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .download-option {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: var(--darker);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 12px;
+        }
+
+        .download-option:hover {
+            background: var(--lighter);
+            border-color: var(--primary);
+        }
+
+        .download-icon {
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 0, 0, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--primary);
+        }
+
+        .download-text h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .download-text p {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* SHARE MODAL */
+        .share-container {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 24px;
+            max-width: 500px;
+            animation: slideUp 0.3s ease;
+        }
+
+        .share-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .share-link-box {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .share-input {
+            flex: 1;
+            background: var(--darker);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 10px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            outline: none;
+        }
+
+        .copy-btn {
+            background: var(--primary);
+            border: none;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: #cc0000;
+        }
+
+        .share-platforms {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .share-platform {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 16px;
+            background: var(--darker);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .share-platform:hover {
+            background: var(--lighter);
+            border-color: var(--primary);
+        }
+
+        .share-platform-icon {
+            font-size: 28px;
+        }
+
+        .share-platform-name {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        /* SETTINGS PANEL */
+        .settings-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 380px;
+            height: 100vh;
+            background: var(--light);
+            border-left: 1px solid var(--border);
+            z-index: 1500;
+            overflow-y: auto;
+            animation: slideInRight 0.3s ease;
+        }
+
+        .settings-panel.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        .settings-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .settings-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .settings-close-btn {
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .settings-close-btn:hover {
+            color: var(--primary);
+        }
+
+        .settings-body {
+            padding: 24px;
+            flex: 1;
+        }
+
+        .setting-group {
+            margin-bottom: 24px;
+        }
+
+        .setting-label {
+            display: block;
+            font-size: 13px;
+            color: var(--text);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .setting-input {
+            width: 100%;
+            background: var(--darker);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 10px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .setting-input:focus {
+            border-color: var(--primary);
+        }
+
+        .theme-colors {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .color-option {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .color-option:hover {
+            transform: scale(1.08);
+            border-color: var(--text);
+        }
+
+        .color-option.selected {
+            border-color: var(--text);
+            box-shadow: 0 0 12px currentColor;
+        }
+
+        .lang-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            background: var(--darker);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .lang-btn:hover {
+            border-color: var(--primary);
+        }
+
+        .lang-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .save-settings-btn {
+            width: 100%;
+            background: var(--primary);
+            border: none;
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .save-settings-btn:hover {
+            background: #cc0000;
+        }
+
+        .info-alert {
+            background: rgba(100, 181, 246, 0.1);
+            border: 1px solid rgba(100, 181, 246, 0.3);
+            color: #64b5f6;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+
+        /* LOADING & EMPTY */
+        .loading-spinner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 300px;
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 400px;
+            color: var(--text-secondary);
+            gap: 16px;
+        }
+
+        .empty-icon {
+            font-size: 64px;
+            opacity: 0.3;
+        }
+
+        /* NOTIFICATION */
+        .notification {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--primary);
+            color: white;
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            z-index: 3000;
+            animation: slideInUp 0.3s ease;
+            box-shadow: 0 4px 12px rgba(255,0,0,0.3);
+        }
+
+        @keyframes slideInUp {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* SCROLLBAR */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-tertiary);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .videos-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 12px;
+                padding: 16px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 0 16px;
+            }
+
+            .search-container {
+                display: none;
+            }
+
+            .sidebar {
+                width: 72px;
+            }
+
+            .sidebar.collapsed .nav-text {
+                display: none;
+            }
+
+            .nav-item {
+                justify-content: center;
+                gap: 0;
+            }
+
+            .sidebar-divider,
+            .sidebar-section-title,
+            .history-list {
+                display: none;
+            }
+
+            .settings-panel {
+                width: 100%;
+            }
+
+            .modal-content {
+                width: 95%;
+            }
+
+            .player-container {
+                height: 300px;
+            }
+
+            .download-options,
+            .share-container {
+                max-width: 90%;
+            }
+
+            .theme-colors {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .videos-grid {
+                grid-template-columns: 1fr;
+                padding: 12px;
+            }
+
+            .header {
+                height: auto;
+                flex-direction: column;
+                gap: 8px;
+                padding: 8px;
+            }
+
+            .header-left {
+                width: 100%;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .search-container {
+                display: block;
+                width: 100%;
+                order: -1;
+            }
+
+            .modal-title {
+                font-size: 20px;
+            }
+
+            .player-container {
+                height: 200px;
+            }
+
+            .share-platforms {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-left">
+                <button class="menu-btn" id="menuBtn" title="মেনু">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <a href="#" class="logo" id="logoLink">
+                    <i class="fas fa-play-circle logo-icon"></i>
+                    <span class="logo-text">Taher Tube</span>
+                </a>
+            </div>
+
+            <div class="search-container">
+                <div class="search-box">
+                    <input 
+                        type="text" 
+                        class="search-input" 
+                        id="searchInput" 
+                        placeholder="ভিডিও খুঁজুন..."
+                        autocomplete="off"
+                    >
+                    <button class="search-btn" id="searchBtn" title="সার্চ">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <div class="search-suggestions" id="searchSuggestions"></div>
+            </div>
+
+            <div class="header-right">
+                <button class="header-icon-btn" id="themeBtn" title="থিম">
+                    <i class="fas fa-palette"></i>
+                </button>
+                <button class="header-icon-btn" id="settingsBtn" title="সেটিংস">
+                    <i class="fas fa-cog"></i>
+                </button>
+                <div class="user-avatar" title="প্রোফাইল">T</div>
+            </div>
+        </header>
+
+        <div class="main">
+            <!-- SIDEBAR -->
+            <aside class="sidebar" id="sidebar">
+                <div class="nav-section">
+                    <div class="nav-item active" data-section="home">
+                        <i class="fas fa-home nav-icon"></i>
+                        <span class="nav-text">হোম</span>
+                    </div>
+                    <div class="nav-item" data-section="trending">
+                        <i class="fas fa-fire nav-icon"></i>
+                        <span class="nav-text">ট্রেন্ডিং</span>
+                    </div>
+                    <div class="nav-item" data-section="popular">
+                        <i class="fas fa-star nav-icon"></i>
+                        <span class="nav-text">জনপ্রিয়</span>
+                    </div>
+                </div>
+
+                <div class="sidebar-divider"></div>
+
+                <div class="sidebar-section-title">আপনার ইতিহাস</div>
+                <div class="history-list" id="historyList"></div>
+            </aside>
+
+            <!-- CONTENT -->
+            <div class="content">
+                <div class="filter-bar">
+                    <button class="filter-btn active" data-filter="relevance">প্রাসঙ্গিক</button>
+                    <button class="filter-btn" data-filter="viewCount">বেশি ভিউ</button>
+                    <button class="filter-btn" data-filter="rating">রেটিং</button>
+                    <button class="filter-btn" data-filter="publishedAt">সর্বশেষ</button>
+                </div>
+
+                <div class="videos-wrapper">
+                    <div class="videos-grid" id="videosGrid">
+                        <div class="loading-spinner">
+                            <div class="spinner"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIDEO MODAL -->
+    <div class="modal-overlay" id="videoModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalCloseBtn">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="player-container">
+                <iframe id="playerIframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <div class="modal-info">
+                <h2 class="modal-title" id="modalTitle">ভিডিও শিরোনাম</h2>
+                <div class="modal-meta">
+                    <span id="modalViews">0</span> ভিউ
+                    <span>•</span>
+                    <span id="modalDate">--</span>
+                    <span>•</span>
+                    <span id="modalChannel">চ্যানেল</span>
+                </div>
+                <div class="modal-actions-group">
+                    <button class="modal-action-btn" id="likeBtn">
+                        <i class="fas fa-thumbs-up"></i> পছন্দ
+                    </button>
+                    <button class="modal-action-btn" id="dislikeBtn">
+                        <i class="fas fa-thumbs-down"></i> অপছন্দ
+                    </button>
+                    <button class="modal-action-btn" id="shareBtn">
+                        <i class="fas fa-share"></i> শেয়ার
+                    </button>
+                    <button class="modal-action-btn" id="downloadBtn">
+                        <i class="fas fa-download"></i> ডাউনলোড
+                    </button>
+                </div>
+                <div class="modal-description" id="modalDescription">বিবরণ লোড হচ্ছে...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DOWNLOAD OPTIONS MODAL -->
+    <div class="modal-overlay" id="downloadModal">
+        <div class="download-options">
+            <h3 class="download-title">ডাউনলোড বিকল্প</h3>
+            <div class="download-option" id="downloadPC">
+                <div class="download-icon">
+                    <i class="fas fa-desktop"></i>
+                </div>
+                <div class="download-text">
+                    <h3>পিসিতে ডাউনলোড করুন</h3>
+                    <p>সর্বোচ্চ মান এবং দ্রুত গতি</p>
+                </div>
+            </div>
+            <div class="download-option" id="downloadWebsite">
+                <div class="download-icon">
+                    <i class="fas fa-cloud-download-alt"></i>
+                </div>
+                <div class="download-text">
+                    <h3>ওয়েবসাইটে সংরক্ষণ করুন</h3>
+                    <p>ভবিষ্যতে দেখার জন্য সংরক্ষণ করুন</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SHARE MODAL -->
+    <div class="modal-overlay" id="shareModal">
+        <div class="share-container">
+            <h3 class="share-title">ভিডিও শেয়ার করুন</h3>
+            <div class="share-link-box">
+                <input type="text" class="share-input" id="shareInput" readonly>
+                <button class="copy-btn" id="copyBtn">কপি</button>
+            </div>
+            <div class="share-platforms">
+                <div class="share-platform" id="shareWhatsapp">
+                    <i class="fab fa-whatsapp share-platform-icon" style="color: #25D366;"></i>
+                    <span class="share-platform-name">হোয়াটসঅ্যাপ</span>
+                </div>
+                <div class="share-platform" id="shareFacebook">
+                    <i class="fab fa-facebook share-platform-icon" style="color: #1877F2;"></i>
+                    <span class="share-platform-name">ফেসবুক</span>
+                </div>
+                <div class="share-platform" id="shareTelegram">
+                    <i class="fab fa-telegram share-platform-icon" style="color: #0088cc;"></i>
+                    <span class="share-platform-name">টেলিগ্রাম</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SETTINGS PANEL -->
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-header">
+            <h3 class="settings-title">সেটিংস</h3>
+            <button class="settings-close-btn" id="settingsCloseBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="settings-body">
+            <div class="setting-group">
+                <label class="setting-label">YouTube API কী:</label>
+                <input type="password" class="setting-input" id="apiKeyInput" placeholder="আপনার API কী">
+                <div class="info-alert">
+                    <i class="fas fa-info-circle"></i> 
+                    <a href="https://console.developers.google.com" target="_blank" style="color: inherit; text-decoration: underline;">Google Console এ যান</a>
+                </div>
+            </div>
+
+            <div class="setting-group">
+                <label class="setting-label">ডিফল্ট সার্চ:</label>
+                <input type="text" class="setting-input" id="defaultSearchInput" placeholder="বাংলা গান">
+            </div>
+
+            <div class="setting-group">
+                <label class="setting-label">থিম রং:</label>
+                <div class="theme-colors" id="themeColors">
+                    <div class="color-option" data-color="#FF0000" style="background: #FF0000; border-color: white;"></div>
+                    <div class="color-option" data-color="#0066CC" style="background: #0066CC;"></div>
+                    <div class="color-option" data-color="#00AA00" style="background: #00AA00;"></div>
+                    <div class="color-option" data-color="#FF9900" style="background: #FF9900;"></div>
+                </div>
+            </div>
+
+            <div class="setting-group">
+                <label class="setting-label">ভাষা:</label>
+                <div class="lang-buttons">
+                    <button class="lang-btn active" data-lang="bn">বাংলা</button>
+                    <button class="lang-btn" data-lang="en">English</button>
+                </div>
+            </div>
+
+            <button class="save-settings-btn" id="saveBtnSettings">সংরক্ষণ করুন</button>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // CONFIGURATION
+        // ============================================
+        const CONFIG = {
+            apiKey: localStorage.getItem('youtubeApiKey') || '',
+            defaultSearch: localStorage.getItem('defaultSearch') || 'বাংলা গান',
+            language: localStorage.getItem('language') || 'bn',
+            theme: localStorage.getItem('theme') || '#FF0000'
+        };
+
+        const TEXTS = {
+            bn: {
+                noResults: 'কোন ফলাফল পাওয়া যায়নি',
+                copied: 'লিংক কপি হয়েছে!',
+                saved: 'সংরক্ষণ করা হয়েছে!',
+                error: 'ত্রুটি হয়েছে',
+                loading: 'লোড হচ্ছে...'
+            },
+            en: {
+                noResults: 'No results found',
+                copied: 'Link copied!',
+                saved: 'Saved!',
+                error: 'An error occurred',
+                loading: 'Loading...'
+            }
+        };
+
+        // ============================================
+        // STATE
+        // ============================================
+        let allVideos = [];
+        let searchHistory = JSON.parse(localStorage.getItem('searchHistory') || '[]');
+        let watchHistory = JSON.parse(localStorage.getItem('watchHistory') || '[]');
+        let currentSort = 'relevance';
+        let isLoading = false;
+        let currentVideoId = null;
+
+        // ============================================
+        // DOM ELEMENTS
+        // ============================================
+        const menuBtn = document.getElementById('menuBtn');
+        const sidebar = document.getElementById('sidebar');
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const searchSuggestions = document.getElementById('searchSuggestions');
+        const videosGrid = document.getElementById('videosGrid');
+        const videoModal = document.getElementById('videoModal');
+        const modalCloseBtn = document.getElementById('modalCloseBtn');
+        const playerIframe = document.getElementById('playerIframe');
+        const downloadModal = document.getElementById('downloadModal');
+        const shareModal = document.getElementById('shareModal');
+        const shareInput = document.getElementById('shareInput');
+        const settingsPanel = document.getElementById('settingsPanel');
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsCloseBtn = document.getElementById('settingsCloseBtn');
+        const apiKeyInput = document.getElementById('apiKeyInput');
+        const defaultSearchInput = document.getElementById('defaultSearchInput');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const navItems = document.querySelectorAll('.nav-item');
+        const colorOptions = document.querySelectorAll('.color-option');
+        const langBtns = document.querySelectorAll('.lang-btn');
+        const saveBtnSettings = document.getElementById('saveBtnSettings');
+        const videosWrapper = document.querySelector('.videos-wrapper');
+        const logoLink = document.getElementById('logoLink');
+        const historyList = document.getElementById('historyList');
+
+        // ============================================
+        // UTILITY FUNCTIONS
+        // ============================================
+
+        function formatNumber(num) {
+            if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+            if (num >= 1000) return (num / 1000).toFixed(0) + 'K';
+            return num.toString();
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return CONFIG.language === 'bn' ? 
+                date.toLocaleDateString('bn-BD') : 
+                date.toLocaleDateString();
+        }
+
+        function getDuration(duration) {
+            const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+            const h = parseInt(match[1]) || 0;
+            const m = parseInt(match[2]) || 0;
+            const s = parseInt(match[3]) || 0;
+            if (h) return `${h}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+            return `${m}:${s.toString().padStart(2, '0')}`;
+        }
+
+        function getThumbnail(thumbnails) {
+            return thumbnails.high?.url || thumbnails.medium?.url || thumbnails.default?.url;
+        }
+
+        function showNotification(message) {
+            const notif = document.createElement('div');
+            notif.className = 'notification';
+            notif.textContent = message;
+            document.body.appendChild(notif);
+            setTimeout(() => notif.remove(), 3000);
+        }
+
+        function closeAllModals() {
+            videoModal.classList.remove('active');
+            downloadModal.classList.remove('active');
+            shareModal.classList.remove('active');
+        }
+
+        // ============================================
+        // SEARCH HISTORY & SUGGESTIONS
+        // ============================================
+
+        function addToSearchHistory(query) {
+            if (!searchHistory.includes(query)) {
+                searchHistory.unshift(query);
+                searchHistory = searchHistory.slice(0, 10);
+                localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+            }
+            updateHistorySidebar();
+        }
+
+        function updateHistorySidebar() {
+            historyList.innerHTML = watchHistory
+                .slice(0, 8)
+                .map(item => `
+                    <div class="history-item" title="${item}" onclick="searchVideos('${item}')">
+                        <i class="fas fa-history" style="margin-right: 6px; font-size: 10px;"></i>
+                        ${item}
+                    </div>
+                `)
+                .join('');
+        }
+
+        function updateSearchSuggestions() {
+            const value = searchInput.value.trim();
+            if (!value) {
+                searchSuggestions.classList.remove('active');
+                return;
+            }
+
+            const suggestions = searchHistory.filter(item => 
+                item.toLowerCase().includes(value.toLowerCase())
+            );
+
+            if (suggestions.length === 0) {
+                searchSuggestions.classList.remove('active');
+                return;
+            }
+
+            searchSuggestions.innerHTML = suggestions
+                .map(suggestion => `
+                    <div class="suggestion-item" onclick="searchVideos('${suggestion}')">
+                        <i class="fas fa-history"></i>
+                        ${suggestion}
+                    </div>
+                `)
+                .join('');
+            searchSuggestions.classList.add('active');
+        }
+
+        // ============================================
+        // VIDEO FUNCTIONS
+        // ============================================
+
+        function createVideoCard(video) {
+            const initial = video.channelTitle.charAt(0).toUpperCase();
+            return `
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="${video.thumbnail}" alt="${video.title}" loading="lazy">
+                        <div class="video-overlay">
+                            <div class="play-icon" onclick="playVideo('${video.id}')">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                        <span class="duration-badge">${video.duration}</span>
+                    </div>
+                    <div class="video-info">
+                        <div class="video-title" onclick="playVideo('${video.id}')" style="cursor: pointer;">
+                            ${video.title}
+                        </div>
+                        <div class="video-channel">
+                            <div class="channel-avatar">${initial}</div>
+                            <div class="channel-info">
+                                <span class="channel-name">${video.channelTitle}</span>
+                                <div class="video-stats">
+                                    ${formatNumber(video.viewCount)} ভিউ • ${video.publishedAt}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="video-actions">
+                            <button class="action-btn" onclick="playVideo('${video.id}')">
+                                <i class="fas fa-play"></i> প্লে
+                            </button>
+                            <button class="action-btn" onclick="openDownloadModal('${video.id}')">
+                                <i class="fas fa-download"></i> ডাউনলোড
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderVideos() {
+            if (allVideos.length === 0) {
+                videosGrid.innerHTML = `
+                    <div style="grid-column: 1/-1;">
+                        <div class="empty-state">
+                            <div class="empty-icon"><i class="fas fa-search"></i></div>
+                            <div>${TEXTS[CONFIG.language].noResults}</div>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            videosGrid.innerHTML = allVideos.map(createVideoCard).join('');
+        }
+
+        function showLoading() {
+            videosGrid.innerHTML = `
+                <div style="grid-column: 1/-1;">
+                    <div class="loading-spinner">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ============================================
+        // API FUNCTIONS
+        // ============================================
+
+        async function fetchVideos(query) {
+            if (!CONFIG.apiKey) {
+                videosGrid.innerHTML = `
+                    <div style="grid-column: 1/-1;">
+                        <div class="empty-state">
+                            <i class="fas fa-exclamation-circle" style="font-size: 48px; opacity: 0.5;"></i>
+                            <div>API কী সেটিংসে যোগ করুন</div>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            isLoading = true;
+            showLoading();
+            addToSearchHistory(query);
+
+            try {
+                const params = new URLSearchParams({
+                    part: 'snippet',
+                    q: query,
+                    type: 'video',
+                    maxResults: 30,
+                    key: CONFIG.apiKey,
+                    order: currentSort === 'relevance' ? 'relevance' : 'relevance',
+                    regionCode: 'BD'
+                });
+
+                const searchRes = await fetch(`https://www.googleapis.com/youtube/v3/search?${params}`);
+                const searchData = await searchRes.json();
+
+                if (searchData.error) {
+                    throw new Error(searchData.error.message);
+                }
+
+                const videoIds = searchData.items.map(item => item.id.videoId).join(',');
+                const statsRes = await fetch(
+                    `https://www.googleapis.com/youtube/v3/videos?part=statistics,contentDetails&id=${videoIds}&key=${CONFIG.apiKey}`
+                );
+                const statsData = await statsRes.json();
+
+                const statsMap = {};
+                statsData.items.forEach(item => {
+                    statsMap[item.id] = item;
+                });
+
+                allVideos = searchData.items.map(item => {
+                    const stats = statsMap[item.id.videoId] || {};
+                    return {
+                        id: item.id.videoId,
+                        title: item.snippet.title,
+                        description: item.snippet.description,
+                        thumbnail: getThumbnail(item.snippet.thumbnails),
+                        channelTitle: item.snippet.channelTitle,
+                        channelId: item.snippet.channelId,
+                        publishedAt: formatDate(item.snippet.publishedAt),
+                        viewCount: parseInt(stats.statistics?.viewCount) || 0,
+                        rating: parseFloat(stats.statistics?.likeCount) || 0,
+                        duration: getDuration(stats.contentDetails?.duration || 'PT0S')
+                    };
+                });
+
+                sortVideos();
+                renderVideos();
+                searchSuggestions.classList.remove('active');
+                isLoading = false;
+            } catch (error) {
+                console.error('Error:', error);
+                videosGrid.innerHTML = `
+                    <div style="grid-column: 1/-1;">
+                        <div class="empty-state">
+                            <i class="fas fa-exclamation-triangle" style="font-size: 48px; opacity: 0.5;"></i>
+                            <div>ত্রুটি: ${error.message}</div>
+                        </div>
+                    </div>
+                `;
+                isLoading = false;
+            }
+        }
+
+        function searchVideos(query) {
+            searchInput.value = query;
+            fetchVideos(query);
+        }
+
+        function sortVideos() {
+            if (currentSort === 'viewCount') {
+                allVideos.sort((a, b) => b.viewCount - a.viewCount);
+            } else if (currentSort === 'rating') {
+                allVideos.sort((a, b) => b.rating - a.rating);
+            } else if (currentSort === 'publishedAt') {
+                allVideos.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+            }
+        }
+
+        // ============================================
+        // VIDEO PLAYER
+        // ============================================
+
+        function playVideo(videoId) {
+            const video = allVideos.find(v => v.id === videoId);
+            if (!video) return;
+
+            currentVideoId = videoId;
+            playerIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+            document.getElementById('modalTitle').textContent = video.title;
+            document.getElementById('modalViews').textContent = formatNumber(video.viewCount);
+            document.getElementById('modalDate').textContent = video.publishedAt;
+            document.getElementById('modalChannel').textContent = video.channelTitle;
+            document.getElementById('modalDescription').textContent = video.description || 'বিবরণ উপলব্ধ নেই';
+
+            // Add to watch history
+            if (!watchHistory.includes(video.title)) {
+                watchHistory.unshift(video.title);
+                watchHistory = watchHistory.slice(0, 20);
+                localStorage.setItem('watchHistory', JSON.stringify(watchHistory));
+                updateHistorySidebar();
+            }
+
+            videoModal.classList.add('active');
+        }
+
+        function closeVideoModal() {
+            videoModal.classList.remove('active');
+            playerIframe.src = '';
+            currentVideoId = null;
+        }
+
+        // ============================================
+        // DOWNLOAD FUNCTIONS
+        // ============================================
+
+        function openDownloadModal(videoId) {
+            currentVideoId = videoId;
+            downloadModal.classList.add('active');
+        }
+
+        function downloadPC() {
+            if (!currentVideoId) return;
+            const video = allVideos.find(v => v.id === currentVideoId);
+            if (!video) return;
+
+            const videoUrl = `https://youtu.be/${currentVideoId}`;
+            
+            // Copy to clipboard for now (real download requires backend)
+            navigator.clipboard.writeText(videoUrl).then(() => {
+                showNotification('ডাউনলোড লিংক কপি হয়েছে। yt-dlp বা অন্য টুল দিয়ে ডাউনলোড করুন।');
+                closeAllModals();
+            });
+        }
+
+        function downloadWebsite() {
+            if (!currentVideoId) return;
+            const video = allVideos.find(v => v.id === currentVideoId);
+            if (!video) return;
+
+            let savedVideos = JSON.parse(localStorage.getItem('savedVideos') || '[]');
+            const videoData = {
+                id: video.id,
+                title: video.title,
+                thumbnail: video.thumbnail,
+                channelTitle: video.channelTitle,
+                views: video.viewCount,
+                date: new Date().toLocaleDateString('bn-BD'),
+                url: `https://youtu.be/${video.id}`
+            };
+
+            if (!savedVideos.find(v => v.id === video.id)) {
+                savedVideos.unshift(videoData);
+                localStorage.setItem('savedVideos', JSON.stringify(savedVideos));
+                showNotification('ভিডিও সংরক্ষণ করা হয়েছে!');
+            } else {
+                showNotification('এই ভিডিও ইতিমধ্যে সংরক্ষণ করা আছে!');
+            }
+            closeAllModals();
+        }
+
+        // ============================================
+        // SHARE FUNCTIONS
+        // ============================================
+
+        function openShareModal() {
+            if (!currentVideoId) return;
+            const shareLink = `https://youtu.be/${currentVideoId}`;
+            shareInput.value = shareLink;
+            shareModal.classList.add('active');
+        }
+
+        function copyShareLink() {
+            shareInput.select();
+            document.execCommand('copy');
+            showNotification(TEXTS[CONFIG.language].copied);
+        }
+
+        function shareToWhatsapp() {
+            const text = `চেক করুন এই দুর্দান্ত ভিডিও: ${shareInput.value}`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        function shareToFacebook() {
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareInput.value)}`, '_blank');
+        }
+
+        function shareToTelegram() {
+            window.open(`https://t.me/share/url?url=${encodeURIComponent(shareInput.value)}`, '_blank');
+        }
+
+        // ============================================
+        // THEME
+        // ============================================
+
+        function applyTheme(color) {
+            document.documentElement.style.setProperty('--primary', color);
+            localStorage.setItem('theme', color);
+            CONFIG.theme = color;
+        }
+
+        function updateColorSelection() {
+            colorOptions.forEach(btn => {
+                btn.classList.remove('selected');
+                if (btn.dataset.color === CONFIG.theme) {
+                    btn.classList.add('selected');
+                }
+            });
+        }
+
+        // ============================================
+        // SETTINGS
+        // ============================================
+
+        function openSettings() {
+            apiKeyInput.value = CONFIG.apiKey;
+            defaultSearchInput.value = CONFIG.defaultSearch;
+            
+            langBtns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === CONFIG.language) {
+                    btn.classList.add('active');
+                }
+            });
+
+            updateColorSelection();
+            settingsPanel.classList.add('active');
+        }
+
+        function closeSettings() {
+            settingsPanel.classList.remove('active');
+        }
+
+        function saveSettings() {
+            CONFIG.apiKey = apiKeyInput.value.trim();
+            CONFIG.defaultSearch = defaultSearchInput.value.trim() || 'বাংলা গান';
+
+            localStorage.setItem('youtubeApiKey', CONFIG.apiKey);
+            localStorage.setItem('defaultSearch', CONFIG.defaultSearch);
+
+            closeSettings();
+            showNotification(TEXTS[CONFIG.language].saved);
+            
+            if (CONFIG.apiKey && !allVideos.length) {
+                fetchVideos(CONFIG.defaultSearch);
+            }
+        }
+
+        // ============================================
+        // EVENT LISTENERS
+        // ============================================
+
+        menuBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+        });
+
+        logoLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            searchInput.value = '';
+            fetchVideos(CONFIG.defaultSearch);
+        });
+
+        searchInput.addEventListener('input', updateSearchSuggestions);
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const query = searchInput.value.trim();
+                if (query) fetchVideos(query);
+            }
+        });
+
+        searchBtn.addEventListener('click', () => {
+            const query = searchInput.value.trim();
+            if (query) fetchVideos(query);
+        });
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentSort = btn.dataset.filter;
+                sortVideos();
+                renderVideos();
+            });
+        });
+
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                navItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+
+        colorOptions.forEach(btn => {
+            btn.addEventListener('click', () => {
+                applyTheme(btn.dataset.color);
+                updateColorSelection();
+            });
+        });
+
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                langBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                CONFIG.language = btn.dataset.lang;
+                localStorage.setItem('language', CONFIG.language);
+            });
+        });
+
+        settingsBtn.addEventListener('click', openSettings);
+        settingsCloseBtn.addEventListener('click', closeSettings);
+        saveBtnSettings.addEventListener('click', saveSettings);
+
+        modalCloseBtn.addEventListener('click', closeVideoModal);
+        videoModal.addEventListener('click', (e) => {
+            if (e.target === videoModal) closeVideoModal();
+        });
+
+        downloadModal.addEventListener('click', (e) => {
+            if (e.target === downloadModal) closeAllModals();
+        });
+
+        shareModal.addEventListener('click', (e) => {
+            if (e.target === shareModal) closeAllModals();
+        });
+
+        document.getElementById('downloadPC').addEventListener('click', downloadPC);
+        document.getElementById('downloadWebsite').addEventListener('click', downloadWebsite);
+
+        document.getElementById('downloadBtn').addEventListener('click', openDownloadModal);
+        document.getElementById('shareBtn').addEventListener('click', openShareModal);
+        document.getElementById('copyBtn').addEventListener('click', copyShareLink);
+        document.getElementById('shareWhatsapp').addEventListener('click', shareToWhatsapp);
+        document.getElementById('shareFacebook').addEventListener('click', shareToFacebook);
+        document.getElementById('shareTelegram').addEventListener('click', shareToTelegram);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeAllModals();
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target) && !searchSuggestions.contains(e.target)) {
+                searchSuggestions.classList.remove('active');
+            }
+        });
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+        window.addEventListener('load', () => {
+            applyTheme(CONFIG.theme);
+            updateHistorySidebar();
+            if (CONFIG.apiKey) {
+                fetchVideos(CONFIG.defaultSearch);
+            }
+        });
+    </script>
+</body>
+</html>
